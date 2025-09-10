@@ -1,69 +1,65 @@
-# React + TypeScript + Vite
+Encontre seu Pet - Palmas-TO
+📖 Sobre o Projeto
+Encontre seu Pet é um protótipo de plataforma web desenvolvido como um projeto acadêmico. O objetivo principal é centralizar e facilitar a busca por animais de estimação perdidos e a divulgação de animais encontrados na cidade de Palmas, Tocantins. A aplicação visa conectar tutores a seus pets desaparecidos de forma rápida e eficiente, fortalecendo a comunidade local em torno do bem-estar animal.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Atualmente, o projeto funciona como um protótipo com páginas estáticas, onde o backend e o banco de dados são simulados através de dados no formato CSV diretamente no código-fonte.
 
-Currently, two official plugins are available:
+✨ Funcionalidades Implementadas
+O protótipo conta com as seguintes páginas e funcionalidades:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Página Inicial (index.html):
 
-## Expanding the ESLint configuration
+Listagem de todos os anúncios de pets perdidos e encontrados.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Sistema de filtros por status ("Perdidos", "Encontrados", "Todos").
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Barra de busca textual para encontrar animais por raça, cor, local, etc.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Cadastro de Usuário (registrar-usuario.html):
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Formulário para criação de uma nova conta de usuário com validação de campos.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Login de Usuário (login.html):
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Formulário para autenticação do usuário.
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Cadastro de Anúncio (cadastrar-pet.html):
+
+Formulário completo para registrar um pet perdido ou encontrado, incluindo campos para espécie, raça, cor, foto e informações de contato.
+
+Gerenciamento de Anúncios (meus-anuncios.html):
+
+Página que simula a área do usuário logado.
+
+Permite ao usuário visualizar seus próprios anúncios e marcar um caso como "Finalizado", atualizando a interface visualmente para indicar que o pet foi encontrado/devolvido.
+
+🛠️ Tecnologias Utilizadas
+Este projeto foi construído utilizando tecnologias modernas de front-end, carregadas via CDN para simplificar o ambiente de desenvolvimento do protótipo:
+
+React: Biblioteca principal para a construção da interface de usuário de forma componentizada.
+
+TypeScript (Conceitual): O projeto foi planejado para usar TypeScript, e a sintaxe nos componentes segue boas práticas, embora a transpilação seja feita via Babel no navegador.
+
+Tailwind CSS: Framework de estilização "utility-first" para criar um design moderno e responsivo rapidamente.
+
+Lucide Icons: Biblioteca de ícones open-source para uma interface mais clara e amigável.
+
+Babel (Standalone): Utilizado para transpilar o código JSX diretamente no navegador, permitindo o desenvolvimento com React em arquivos .html sem a necessidade de um ambiente de compilação complexo.
+
+🚀 Como Executar
+Como este é um protótipo baseado em arquivos estáticos, não há necessidade de instalação de dependências ou de um servidor complexo.
+
+Clone este repositório:
+
+git clone [https://github.com/edumxk/encontre-seu-pet.git](https://github.com/edumxk/encontre-seu-pet.git)
+
+Navegue até o diretório do projeto.
+
+Abra qualquer um dos arquivos .html (comece pelo index.html) diretamente no seu navegador de preferência (Google Chrome, Firefox, etc.).
+
+👥 Equipe
+Eduardo Patrick Pereira Cavalcante
+
+João Miguel Mendes Bezerra Costa
+
+Vinicius Felipe Ferreira Folha
