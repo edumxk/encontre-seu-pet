@@ -79,14 +79,18 @@
                             <h1 className="text-xl font-bold text-gray-800">Encontre seu Pet</h1>
                         </div>
                         <div className="flex items-center gap-2">
+                            <a href="./meus-anuncios.html" className="hidden md:flex items-center gap-2 bg-orange-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors">
+                                <i data-lucide="dog" className="w-5 h-5"></i>
+                                Meus Anuncios
+                            </a >
                             <a href="./cadastrar-pet.html" className="hidden md:flex items-center gap-2 bg-orange-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors">
                                 <i data-lucide="plus-circle" className="w-5 h-5"></i>
                                 Anunciar Pet
-                            </a>
-                             <button onClick={onLoginClick} className="flex items-center gap-2 bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                            </a >
+                             <a href="./login.html" className="flex items-center gap-2 bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
                                 <i data-lucide="log-in" className="w-5 h-5"></i>
                                 <span className="hidden md:inline">Login</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </header>
