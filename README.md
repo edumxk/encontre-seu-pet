@@ -52,7 +52,7 @@ Como este é um protótipo baseado em arquivos estáticos, não há necessidade 
 
 1.  Clone este repositório:
     ```bash
-    git clone [https://github.com/edumxk/encontre-seu-pet.git](https://github.com/edumxk/encontre-seu-pet.git)
+    git clone https://github.com/edumxk/encontre-seu-pet.git
     ```
 2.  Navegue até o diretório do projeto.
 3.  Abra qualquer um dos arquivos `.html` (comece pelo `index.html`) diretamente no seu navegador de preferência (Google Chrome, Firefox, etc.).
