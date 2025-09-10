@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Encontre seu Pet</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel para transpilar JSX no navegador -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Fontes e Ícones -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen p-4">
+
+    <div id="root" class="w-full max-w-md"></div>
+
+    <script type="text/babel">
+        // Para que o Lucide Icons funcione com React
+        lucide.createIcons();
+
+        // --- COMPONENTES REACT ---
+
+        const RegistrationForm = () => {
+            const [formData, setFormData] = React.useState({
+                nome: '',
+                email: '',
+                senha: '',
+                confirmarSenha: '',
+            });
+            const [error, setError] = React.useState('');
+            const [isSuccess, setIsSuccess] = React.useState(false);
+
+            const handleChange = (e) => {
+                const { name, value } = e.target;
+                setFormData(prev => ({ ...prev, [name]: value }));
+                setError(''); // Limpa o erro ao digitar
+            };
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                setError('');
+
+                if (!formData.nome || !formData.email || !formData.senha || !formData.confirmarSenha) {
+                    setError('Todos os campos são obrigatórios.');
+                    return;
+                }
+
+                if (formData.senha !== formData.confirmarSenha) {
+                    setError('As senhas não coincidem.');
+                    return;
+                }
+                
+                // Simulação de sucesso
+                console.log('Dados do formulário:', formData);
+                setIsSuccess(true);
+            };
+            
+            React.useEffect(() => {
+                lucide.createIcons();
+            }, [isSuccess]);
+
+
+            if (isSuccess) {
+                return (
+                    <div className="bg-white rounded-xl shadow-md p-8 text-center">
+                        <div className="mx-auto w-16 h-16 flex items-center justify-center bg-green-100 rounded-full mb-4">
+                            <i data-lucide="check" className="w-10 h-10 text-green-600"></i>
+                        </div>
+                        <h2 className="text-2xl font-bold text-gray-800 mb-2">Cadastro Realizado!</h2>
+                        <p className="text-gray-600 mb-6">Sua conta foi criada com sucesso.</p>
+                        <a href="./index.html" className="w-full inline-block bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors">
+                            Ir para a página inicial
+                        </a>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="bg-white rounded-xl shadow-md p-8">
+                    <div className="text-center mb-6">
+                        <a href="./index.html" className="inline-flex items-center gap-2">
+                           <i data-lucide="paw-print" className="w-8 h-8 text-orange-500"></i>
+                           <h1 className="text-3xl font-bold text-gray-800">Encontre seu Pet</h1>
+                        </a>
+                        <p className="text-gray-600 mt-2">Crie sua conta para começar a ajudar.</p>
+                    </div>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="nome">Nome Completo</label>
+                            <input type="text" id="nome" name="nome" value={formData.nome} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="email">Email</label>
+                            <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="senha">Senha</label>
+                            <input type="password" id="senha" name="senha" value={formData.senha} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500" />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="confirmarSenha">Confirmar Senha</label>
+                            <input type="password" id="confirmarSenha" name="confirmarSenha" value={formData.confirmarSenha} onChange={handleChange} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500" />
+                        </div>
+                        
+                        {error && <p className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">{error}</p>}
+                        
+                        <button type="submit" className="w-full bg-orange-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-600 transition-colors">
+                            Criar Conta
+                        </button>
+                    </form>
+                    <p className="text-center mt-6 text-sm text-gray-600">
+                        Já tem uma conta?{' '}
+                        <a href="#" className="font-semibold text-orange-500 hover:text-orange-600">
+                            Faça login
+                        </a>
+                    </p>
+                </div>
+            );
+        };
+
+        const App = () => {
+            return <RegistrationForm />;
+        };
+
+        // --- RENDERIZAÇÃO DA APLICAÇÃO ---
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+
+    </script>
+</body>
+</html>

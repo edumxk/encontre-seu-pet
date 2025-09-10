@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Anúncios - Encontre seu Pet</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel para transpilar JSX no navegador -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Fontes e Ícones -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Para que o Lucide Icons funcione com React
+        lucide.createIcons();
+
+        // --- DADOS E LÓGICA DE DADOS (Simulando um backend/arquivo) ---
+
+        const csvData = `id,nome,especie,raca,cor,tamanho,fotoUrl,local,data,status
+1,"Rex","cachorro","Vira-lata","Caramelo","medio","https://placehold.co/400x400/FDBF60/333333?text=Rex","Quadra 104 Sul","10/09/2025","perdido"
+2,"Mimi","gato","Siamês","Branco e Marrom","pequeno","https://placehold.co/400x400/D6C7B9/333333?text=Mimi","Próximo ao Capim Dourado Shopping","10/09/2025","encontrado"
+3,"Thor","cachorro","Golden Retriever","Dourado","grande","https://placehold.co/400x400/E5C992/333333?text=Thor","Parque Cesamar","05/09/2025","perdido"
+`;
+
+        const parseCSV = (csvText) => {
+            const lines = csvText.trim().split('\n');
+            const headers = lines[0].split(',');
+            const pets = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g).map(val => val.replace(/"/g, ''));
+                const petObject = {};
+                headers.forEach((header, index) => {
+                    petObject[header] = values[index];
+                });
+                petObject.id = parseInt(petObject.id, 10);
+                petObject.isResolved = false; // Adicionamos um estado para controlar a finalização
+                pets.push(petObject);
+            }
+            return pets;
+        };
+
+        // --- COMPONENTES REACT ---
+
+        const Header = () => {
+            return (
+                <header className="bg-white shadow-sm sticky top-0 z-10">
+                    <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+                         <a href="./index.html" className="flex items-center gap-2 cursor-pointer">
+                            <i data-lucide="paw-print" className="text-orange-500"></i>
+                            <h1 className="text-xl font-bold text-gray-800">Encontre seu Pet</h1>
+                        </a>
+                        <div className="flex items-center gap-2">
+                             <a href="./index.html" className="flex items-center gap-2 bg-gray-200 text-gray-700 font-semibold px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                                <i data-lucide="home" className="w-5 h-5"></i>
+                                <span className="hidden md:inline">Página Inicial</span>
+                            </a>
+                        </div>
+                    </div>
+                </header>
+            );
+        };
+
+        const ManagedPetCard = ({ pet, onMarkAsResolved }) => {
+            const isPerdido = pet.status === 'perdido';
+            
+            return (
+                <div className={`relative bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 ${pet.isResolved ? 'opacity-50' : ''}`}>
+                    {pet.isResolved && (
+                        <div className="absolute inset-0 bg-green-500 bg-opacity-75 flex flex-col items-center justify-center z-10 text-white">
+                             <i data-lucide="check-circle" className="w-16 h-16"></i>
+                             <p className="text-xl font-bold mt-2">FINALIZADO</p>
+                        </div>
+                    )}
+                    <img className="h-48 w-full object-cover" src={pet.fotoUrl} alt={`Foto do pet ${pet.nome}`} />
+                    <div className="p-4">
+                        <div className="flex justify-between items-center mb-2">
+                            <p className={`px-3 py-1 text-xs font-semibold rounded-full ${isPerdido ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>
+                                {isPerdido ? 'PERDIDO' : 'ENCONTRADO'}
+                            </p>
+                            <p className="text-xs text-gray-500">{pet.data}</p>
+                        </div>
+                        <h2 className="text-lg font-bold text-gray-900">{pet.nome}</h2>
+                        <p className="text-sm text-gray-600">{pet.raca}, {pet.cor}</p>
+                        <div className="mt-3 flex items-center text-sm text-gray-500">
+                             <i data-lucide="map-pin" className="w-4 h-4 mr-2 text-gray-400"></i>
+                             <span>{pet.local}</span>
+                        </div>
+                    </div>
+                    <div className="px-4 pb-4 border-t pt-4">
+                        <button 
+                            onClick={() => onMarkAsResolved(pet.id)}
+                            disabled={pet.isResolved}
+                            className="w-full bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                        >
+                             <i data-lucide="check-circle" className="w-5 h-5"></i>
+                             Marcar como Finalizado
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+        
+        const MyPetsPage = () => {
+            const [myPets, setMyPets] = React.useState(() => parseCSV(csvData));
+
+            const handleMarkAsResolved = (petId) => {
+                setMyPets(prevPets => 
+                    prevPets.map(pet => 
+                        pet.id === petId ? { ...pet, isResolved: true } : pet
+                    )
+                );
+            };
+            
+            React.useEffect(() => {
+                lucide.createIcons();
+            });
+
+            return (
+                <main className="container mx-auto p-4 md:p-8">
+                   <div className="mb-6">
+                        <h2 className="text-3xl font-bold text-gray-800">Meus Anúncios</h2>
+                        <p className="text-gray-600">Gerencie os pets que você cadastrou.</p>
+                   </div>
+                   
+                   {myPets.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {myPets.map(pet => 
+                                <ManagedPetCard 
+                                    key={pet.id} 
+                                    pet={pet} 
+                                    onMarkAsResolved={handleMarkAsResolved}
+                                />
+                            )}
+                        </div>
+                   ) : (
+                        <div className="text-center py-16 px-4 bg-white rounded-lg shadow-sm">
+                            <p>Você ainda não cadastrou nenhum pet.</p>
+                        </div>
+                   )}
+                </main>
+            );
+        };
+
+        const App = () => {
+            return (
+                 <div>
+                    <Header />
+                    <MyPetsPage />
+                </div>
+            );
+        };
+
+        // --- RENDERIZAÇÃO DA APLICAÇÃO ---
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+
+    </script>
+</body>
+</html>
+
