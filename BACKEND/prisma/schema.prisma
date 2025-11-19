@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  name     String  // Nome completo
+  email    String  @unique // Login principal
+  password String  // Apenas o hash da senha
+  
+  phone    String? // WhatsApp (Opcional no cadastro, obrigatório depois?)
+  city     String? // Cidade
+  state    String? // Estado (UF)
+  
+  avatar   String? // URL da foto de perfil (futuro)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt // Atualiza sozinho quando edita o perfil
+
+  pets      Pet[]
+  sightings   Sighting[]
+  notifications Notification[] // Relacionamento
+  petsFound     Pet[]     @relation("PetFinder") // Pets que ele encontrou
+}
+
+model Pet {
+  id          Int      @id @default(autoincrement())
+  name        String?  // Pode ser opcional (se o pet for perdido e não souberem o nome)
+  species     String   // especie (cachorro, gato)
+  breed       String?  // raca
+  color       String?  // cor
+  size        String?  // tamanho
+  location    String   // local
+  status      String   // perdido, encontrado, adocao
+  
+  contact     String?  // contato (whatsapp/telefone específico para este post)
+  reward      String?  // recompensa (se houver)
+  
+  description String?
+  //imageUrl    String?  // Vamos salvar a URL aqui (futuramente upload)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  
+  latitude    Float?
+  longitude   Float?
+
+  resolvedAt        DateTime? // Data da resolução
+  finalLatitude     Float?    // Onde foi encontrado
+  finalLongitude    Float?    // Onde foi encontrado
+  
+  foundByUserId     Int?      // Se foi um usuário do sistema
+  foundByExternal   String?   // Se foi alguém de fora (nome)
+  
+  sightings   Sighting[]
+  finder            User?     @relation("PetFinder", fields: [foundByUserId], references: [id])
+  images      PetImage[]
+}
+
+model PetImage {
+  id    Int    @id @default(autoincrement())
+  url   String // O link da foto
+  
+  petId Int
+  pet   Pet    @relation(fields: [petId], references: [id], onDelete: Cascade)
+}
+
+model Sighting {
+  id          Int      @id @default(autoincrement())
+  latitude    Float
+  longitude   Float
+  dateTime    DateTime // Dia e hora que viu
+  description String?  // "Vi ele correndo perto da padaria"
+  
+  createdAt   DateTime @default(now())
+
+  petId       Int
+  pet         Pet      @relation(fields: [petId], references: [id], onDelete: Cascade)
+
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  title     String
+  message   String
+  read      Boolean  @default(false) // Se já foi lida
+  type      String   // ex: 'sighting', 'system'
+  link      String?  // Link para onde a notificação leva (ex: /pet/1)
+  
+  createdAt DateTime @default(now())
+
+  userId    Int      // Quem recebe a notificação
+  user      User     @relation(fields: [userId], references: [id])
+}

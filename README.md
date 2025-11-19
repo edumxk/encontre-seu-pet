@@ -6,58 +6,117 @@
 
 **Encontre seu Pet** é um protótipo de plataforma web desenvolvido como um projeto acadêmico. O objetivo principal é centralizar e facilitar a busca por animais de estimação perdidos e a divulgação de animais encontrados na cidade de Palmas, Tocantins. A aplicação visa conectar tutores a seus pets desaparecidos de forma rápida e eficiente, fortalecendo a comunidade local em torno do bem-estar animal.
 
-Atualmente, o projeto funciona como um protótipo com páginas estáticas, onde o backend e o banco de dados são simulados através de dados no formato CSV diretamente no código-fonte.
 
----
+Este é um projeto full-stack desenvolvido para conectar a comunidade em torno da causa animal, permitindo o cadastro de anúncios de pets **Perdidos**, **Encontrados** e disponíveis para **Adoção**.
 
-## ✨ Funcionalidades Implementadas
+## ✨ Tecnologias Utilizadas
 
-O protótipo conta com as seguintes páginas e funcionalidades:
+Este projeto é dividido em **Frontend** (React/Vite) e **Backend** (Node.js/Express).
 
-* **Página Inicial (`index.html`):**
-    * Listagem de todos os anúncios de pets perdidos e encontrados.
-    * Sistema de **filtros** por status ("Perdidos", "Encontrados", "Todos").
-    * **Barra de busca** textual para encontrar animais por raça, cor, local, etc.
+### Frontend (Client-side)
 
-* **Cadastro de Usuário (`registrar-usuario.html`):**
-    * Formulário para criação de uma nova conta de usuário com validação de campos.
+| Tecnologia | Descrição |
+| :--- | :--- |
+| **React** | Biblioteca JavaScript principal para construção da interface do usuário. |
+| **TypeScript** | Linguagem que adiciona tipagem estática ao JavaScript, aumentando a robustez. |
+| **Vite** | Tooling de build rápido para o ambiente de desenvolvimento. |
+| **Tailwind CSS** | Framework CSS utilitário para estilização rápida e responsiva. |
+| **Lucide React** | Biblioteca de ícones simples e consistentes. |
+| **React Router DOM** | Roteamento de componentes na aplicação. |
+| **Leaflet Maps** | Biblioteca de mapas para exibição e marcação de localização dos pets. |
 
-* **Login de Usuário (`login.html`):**
-    * Formulário para autenticação do usuário.
+### Backend (Server-side)
 
-* **Cadastro de Anúncio (`cadastrar-pet.html`):**
-    * Formulário completo para registrar um pet perdido ou encontrado, incluindo campos para espécie, raça, cor, foto e informações de contato.
+| Tecnologia | Descrição |
+| :--- | :--- |
+| **Node.js** | Ambiente de execução JavaScript no lado do servidor. |
+| **Express** | Framework web rápido e minimalista para Node.js, usado para criar a API REST. |
+| **Prisma ORM** | **ORM (Object-Relational Mapper)** moderno, usado para comunicação e migração com o banco de dados. |
+| **PostgreSQL** | **Sistema de Banco de Dados** robusto e relacional (você pode substituir por MySQL ou SQLite, dependendo da sua configuração). |
+| **JWT (JSON Web Tokens)** | Padrão de segurança para autenticação e autorização de usuários. |
+| **Multer** | Middleware para Node.js usado para lidar com o upload de arquivos (fotos dos pets). |
 
-* **Gerenciamento de Anúncios (`meus-anuncios.html`):**
-    * Página que simula a área do usuário logado.
-    * Permite ao usuário visualizar seus próprios anúncios e **marcar um caso como "Finalizado"**, atualizando a interface visualmente para indicar que o pet foi encontrado/devolvido.
+-----
 
----
+## 🛠️ Estrutura do Projeto
 
-## 🛠️ Tecnologias Utilizadas
+O projeto segue uma arquitetura separada (Frontend e Backend) que se comunicam através de requisições HTTP (API REST).
 
-Este projeto foi construído utilizando tecnologias modernas de front-end, carregadas via CDN para simplificar o ambiente de desenvolvimento do protótipo:
+### Backend (API)
 
-* [**React**](https://react.dev/): Biblioteca principal para a construção da interface de usuário de forma componentizada.
-* [**TypeScript**](https://www.typescriptlang.org/)** (Conceitual)**: O projeto foi planejado para usar TypeScript, e a sintaxe nos componentes segue boas práticas, embora a transpilação seja feita via Babel no navegador.
-* [**Tailwind CSS**](https://tailwindcss.com/): Framework de estilização "utility-first" para criar um design moderno e responsivo rapidamente.
-* [**Lucide Icons**](https://lucide.dev/): Biblioteca de ícones open-source para uma interface mais clara e amigável.
-* [**Babel (Standalone)**](https://babeljs.io/docs/babel-standalone): Utilizado para transpilar o código JSX diretamente no navegador, permitindo o desenvolvimento com React em arquivos `.html` sem a necessidade de um ambiente de compilação complexo.
+  * **Models:** Definidos via **Prisma Schema** (`schema.prisma`).
+  * **Controllers:** Recebem as requisiçõe HTTP, validam dados e chamam os serviços.
+  * **Services:** Contêm a **regra de negócio** principal (e.g., `CreateUserService`, `ResolvePetService`).
+  * **Routes:** Mapeamento dos endpoints (`/pets`, `/login`, `/users`).
+  * **Database Logic:** Utiliza **Prisma** para todas as operações de CRUD.
 
----
+### Frontend (Web App)
 
-## 🚀 Como Executar
+  * **Pages:** Componentes de nível superior que representam as diferentes rotas (`/login`, `/register`, `/`, `/meus-anuncios`).
+  * **Components:** Componentes reutilizáveis (`Header`, `PetCard`, `SearchBar`, `MapComponent`).
+  * **State Management:** Gerenciamento de estado local via `useState` e `useEffect`.
+  * **Authentication:** Baseada no **Token JWT** armazenado no `localStorage`.
 
-Como este é um protótipo baseado em arquivos estáticos, não há necessidade de instalação de dependências ou de um servidor complexo.
+-----
 
-1.  Clone este repositório:
-    ```bash
-    git clone https://github.com/edumxk/encontre-seu-pet.git
+## 🚀 Como Iniciar o Projeto
+
+Siga estes passos para configurar o ambiente de desenvolvimento.
+
+### 1\. Configuração do Banco de Dados (Backend)
+
+1.  **Instale e configure** o seu banco de dados (ex: PostgreSQL).
+
+2.  Crie um arquivo **`.env`** na raiz da pasta do seu Backend e adicione sua URL de conexão com o Prisma:
+
+    ```env
+    # Exemplo para PostgreSQL
+    DATABASE_URL="postgresql://[USUARIO]:[SENHA]@[HOST]:[PORTA]/[NOME_DB]?schema=public"
+    JWT_SECRET="sua_chave_secreta_aqui"
     ```
-2.  Navegue até o diretório do projeto.
-3.  Abra qualquer um dos arquivos `.html` (comece pelo `index.html`) diretamente no seu navegador de preferência (Google Chrome, Firefox, etc.).
 
----
+3.  **Execute as migrações** para criar as tabelas no seu banco de dados:
+
+    ```bash
+    npx prisma migrate dev --name init
+    ```
+
+### 2\. Rodar o Backend (API)
+
+Na pasta do Backend:
+
+```bash
+# Instala as dependências
+npm install
+
+# Inicia o servidor (geralmente com hot-reload)
+npm run dev
+```
+
+O backend estará acessível em `http://localhost:3000`.
+
+### 3\. Rodar o Frontend (Aplicação Web)
+
+Na pasta do Frontend:
+
+```bash
+# Instala as dependências
+npm install
+
+# Inicia a aplicação React
+npm run dev
+```
+
+O Frontend estará acessível em `http://localhost:5173` (ou a porta que o Vite definir). Certifique-se de que todas as requisições no Frontend estão apontando corretamente para o Backend (ajustando a URL base de `http://localhost:3000` para a URL de produção, se aplicável).
+
+-----
+
+## 🔒 Regras de Negócio Chave
+
+  * **Autenticação:** Usuários são autenticados via JWT.
+  * **Status de Pets:** Os pets podem ter os status: `perdido`, `encontrado`, `adocao` ou `finalizado`.
+  * **Visibilidade `Finalizado`:** Pets com status `finalizado` **não** aparecem na lista pública (Home), sendo visíveis apenas para o criador do anúncio e para o usuário que interagiu na tela de **Meus Anúncios**.
+  * **Resolução:** Ao marcar um pet como `finalizado`, o sistema busca o ID do usuário (se for um usuário da plataforma) pelo **email** para criar um vínculo relacional correto (`foundByUserId`).
 
 ## 👥 Equipe
 

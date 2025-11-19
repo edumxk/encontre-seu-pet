@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "es2020",              /* JavaScript moderno */
+    "module": "commonjs",            /* O padrão robusto do Node (NÃO afeta sua sintaxe) */
+    "esModuleInterop": true,         /* Permite importar pacotes antigos como se fossem novos */
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,                  /* Ativa toda a segurança do TypeScript */
+    "skipLibCheck": true,            /* Pula checagem de arquivos de bibliotecas (mais rápido) */
+    "outDir": "./dist",              /* Onde o código compilado vai ficar */
+    "rootDir": "./src"                  /* Onde está seu código fonte */
+  },
+  "include": ["**/*.ts"],            /* Inclui todos os arquivos .ts */
+  "exclude": ["node_modules"],
+  "typeRoots": [
+      "./node_modules/@types",
+      "./src/@types"
+    ],
+}
