@@ -5,7 +5,7 @@ import {
     Map as MapIcon, Heart, UserCheck 
 } from 'lucide-react';
 import { MapComponent } from '../../components/common/Map';
-
+import { API_BASE_URL } from '../../services/api';
 // --- TIPAGEM ---
 interface UserContact {
     name: string;
@@ -71,7 +71,7 @@ const MeusAnunciosPage = () => {
         if (!token) return;
 
         try {
-            const response = await fetch('http://localhost:3000/my-pets', {
+            const response = await fetch(`${API_BASE_URL}/my-pets`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await response.json();

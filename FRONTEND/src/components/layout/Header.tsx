@@ -4,6 +4,7 @@ import {
     Menu, X, PawPrint, Bell, User, LogOut, 
     PlusCircle, LayoutDashboard, Search, LogIn 
 } from 'lucide-react';
+import { API_BASE_URL } from '../../services/api';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,7 +39,7 @@ const Header = () => {
 
     const fetchUnreadCount = async (token: string) => {
         try {
-            const response = await fetch('http://localhost:3000/notifications', {
+            const response = await fetch(`${API_BASE_URL}/notifications`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {

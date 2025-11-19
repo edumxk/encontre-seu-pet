@@ -4,6 +4,7 @@ import { SearchBar } from '../../components/common/SearchBar';
 import { FilterTabs } from '../../components/common/FilterTabs';
 import type { Pet } from '../../types';
 import { Frown, Loader2 } from 'lucide-react';
+import { API_BASE_URL } from '../../services/api';
 
 type ActiveFilter = 'todos' | 'perdido' | 'encontrado' | 'adocao';
 
@@ -20,7 +21,7 @@ const HomePage = () => {
     useEffect(() => {
         async function fetchPets() {
             try {
-                const response = await fetch('http://localhost:3000/pets');
+                const response = await fetch(`${API_BASE_URL}/pets`);
                 const data = await response.json();
 
                 const mappedPets = data.map((p: any) => {

@@ -6,6 +6,7 @@ import {
     AlertTriangle, HeartHandshake // Novos ícones
 } from 'lucide-react';
 import { MapComponent } from '../../components/common/Map';
+import { API_BASE_URL } from '../../services/api';
 
 interface Sighting {
     id: number;
@@ -72,7 +73,7 @@ const PetDetailsPage = () => {
             } catch (e) { console.error(e); }
         }
 
-        fetch(`http://localhost:3000/pets/${id}`)
+        fetch(`${API_BASE_URL}/pets/${id}`)
             .then(res => res.json())
             .then(data => {
                 if(data.images) {
@@ -112,7 +113,7 @@ const PetDetailsPage = () => {
 
         try {
             // Enviamos para a mesma rota de 'sightings', mas o contexto muda pelo texto
-            const response = await fetch(`http://localhost:3000/pets/${id}/sightings`, {
+            const response = await fetch(`${API_BASE_URL}/pets/${id}/sightings`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

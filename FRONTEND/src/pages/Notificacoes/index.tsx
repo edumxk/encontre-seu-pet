@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Bell, Check, Eye, Inbox, CheckCheck } from 'lucide-react';
+import { API_BASE_URL } from '../../services/api';
 
 interface Notification {
     id: number;
@@ -27,7 +28,7 @@ const NotificacoesPage = () => {
         if (!token) return;
 
         try {
-            const response = await fetch('http://localhost:3000/notifications', {
+            const response = await fetch(`${API_BASE_URL}/notifications`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await response.json();
@@ -44,7 +45,7 @@ const NotificacoesPage = () => {
         setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
 
         const token = localStorage.getItem('token');
-        await fetch(`http://localhost:3000/notifications/${id}/read`, {
+        await fetch(`${API_BASE_URL}/notifications/${id}/read`, {
             method: 'PATCH',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -62,7 +63,7 @@ const NotificacoesPage = () => {
         const token = localStorage.getItem('token');
         // Loop simples para marcar todas (idealmente o backend teria uma rota de "mark all")
         for (const id of unreadIds) {
-             await fetch(`http://localhost:3000/notifications/${id}/read`, {
+             await fetch(`${API_BASE_URL}/notifications/${id}/read`, {
                 method: 'PATCH',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

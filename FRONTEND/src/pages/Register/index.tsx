@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PawPrint, CheckCircle, AlertCircle } from 'lucide-react';
+import { API_BASE_URL } from '../../services/api';
 
 const RegisterPage = () => {
     const [formData, setFormData] = useState({
@@ -38,7 +39,7 @@ const RegisterPage = () => {
             setIsLoading(true);
 
             // 1. Tenta Criar o Usuário
-            const registerResponse = await fetch('http://localhost:3000/users', {
+            const registerResponse = await fetch(`${API_BASE_URL}/users`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,7 +59,7 @@ const RegisterPage = () => {
             }
             
             // 2. Cadastro Sucesso! Agora faz o Auto-Login
-            const loginResponse = await fetch('http://localhost:3000/login', {
+            const loginResponse = await fetch(`${API_BASE_URL}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

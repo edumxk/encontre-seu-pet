@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Send, X, CheckCircle, AlertCircle, ChevronLeft, ChevronRight, Plus, MapPin } from 'lucide-react';
 import { MapComponent } from '../../components/common/Map';
+import { API_BASE_URL } from '../../services/api';
 
 const initialFormData = {
     status: 'perdido',
@@ -123,7 +124,7 @@ const CadastrarPetPage = () => {
                 data.append('images', file);
             });
 
-            const response = await fetch('http://localhost:3000/pets', {
+            const response = await fetch(`${API_BASE_URL}/pets`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`

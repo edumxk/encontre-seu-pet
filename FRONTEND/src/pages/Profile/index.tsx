@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Save, MapPin, Phone, Mail, LogOut } from 'lucide-react';
+import { API_BASE_URL } from '../../services/api';
 
 const ProfilePage = () => {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ const ProfilePage = () => {
             }
 
             try {
-                const response = await fetch('http://localhost:3000/profile', {
+                const response = await fetch(`${API_BASE_URL}/profile`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -65,7 +66,7 @@ const ProfilePage = () => {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await fetch('http://localhost:3000/profile', {
+            const response = await fetch(`${API_BASE_URL}/profile`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
