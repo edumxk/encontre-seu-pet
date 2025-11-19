@@ -1,17 +1,6 @@
-import multer, { Options } from 'multer'; // 1. Importe 'Options'
-import path from 'path';
-import crypto from 'crypto';
+import multer, { Options } from 'multer'; 
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.resolve(__dirname, '..', '..', 'uploads'));
-    },
-    filename: (req, file, cb) => {
-        const fileHash = crypto.randomBytes(16).toString('hex');
-        const fileName = `${fileHash}-${file.originalname}`;
-        cb(null, fileName);
-    }
-});
+const storage = multer.memoryStorage();
 
 export const uploadConfig: Options = { 
     storage: storage,
