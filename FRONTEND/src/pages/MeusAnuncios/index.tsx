@@ -11,7 +11,7 @@ interface UserContact {
     name: string;
     phone: string;
 }
-
+ 
 interface MyPet {
     id: number;
     name: string;
@@ -152,7 +152,7 @@ const MeusAnunciosPage = () => {
             }
             // Se for 'me', não mandamos nada, o backend entende.
 
-            const response = await fetch(`http://localhost:3000/pets/${petToResolve.id}/resolve`, {
+            const response = await fetch(`${API_BASE_URL}/pets/${petToResolve.id}/resolve`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(payload)

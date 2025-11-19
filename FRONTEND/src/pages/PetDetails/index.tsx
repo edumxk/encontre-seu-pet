@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { 
     MapPin, Phone, Calendar, Map as MapIcon, Clock, 
     Ruler, Palette, PawPrint, Banknote, User, ArrowLeft, 
-    AlertTriangle, HeartHandshake // Novos ícones
+    AlertTriangle, HeartHandshake
 } from 'lucide-react';
 import { MapComponent } from '../../components/common/Map';
 import { API_BASE_URL } from '../../services/api';
@@ -129,7 +129,6 @@ const PetDetailsPage = () => {
 
             if(response.ok) {
                 alert("Informação enviada com sucesso! O anunciante verá seus dados.");
-                window.location.reload();
             } else {
                 alert("Erro ao enviar.");
             }
