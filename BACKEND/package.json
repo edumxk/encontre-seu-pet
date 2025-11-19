@@ -4,11 +4,9 @@
   "description": "BACKEND",
   "main": "index.js",
   "scripts": {
-	"build": "npx prisma generate && tsc",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "postinstall": "npx prisma generate",  
-    "start": "node dist/server.js"
+  "dev": "ts-node-dev src/server.ts",
+  "build": "npx prisma generate && tsc", 
+  "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",

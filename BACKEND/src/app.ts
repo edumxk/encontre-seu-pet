@@ -1,7 +1,16 @@
-// Remova ou comente app.listen(...) se estiver presente,
-// pois o Vercel lida com a escuta da porta.
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import { router } from './routes';
 
-// ... toda a configuração de middlewares, rotas, etc. ...
+const app = express();
 
-// Sua instância do Express deve ser exportada
-export default app; // ou module.exports = app; se for JavaScript puro
+app.use(cors());
+app.use(express.json());
+
+app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
+
+app.use(router);
+
+export default app;
